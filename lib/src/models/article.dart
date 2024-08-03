@@ -1,9 +1,11 @@
 class Article {
+  final int id;
   final String ?storyTitle;
   final String ?author;
   final DateTime ?createdAt;
 
   Article({
+    required this.id,
     required this.storyTitle,
     required this.author,
     required this.createdAt,
@@ -11,6 +13,7 @@ class Article {
 
   factory Article.fromJson(Map<String, dynamic> json) {
     return Article(
+      id: json['story_id'],
       storyTitle: json['story_title'],
       author: json['author'],
       createdAt: DateTime.parse(json['created_at']),
@@ -19,9 +22,9 @@ class Article {
 
   Map<String, dynamic> toJson() {
     return {
-      'title': storyTitle,
+      'storyTitle': storyTitle,
       'author': author,
-      'created_at': createdAt?.toIso8601String(),
+      'createdAt': createdAt?.toIso8601String(),
     };
   }
 }

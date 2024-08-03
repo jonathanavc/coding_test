@@ -32,14 +32,16 @@ class ApiService {
     if (!verifyApiUrl()) {
       throw Exception(error);
     }
-    final response = await http.get(Uri.parse('$apiUrl/api/v1/search_by_date?query=mobile'));
-    if (response.statusCode == 200) {
-      final jsonData = json.decode(response.body);
-      
-      return jsonData['hits'].map<Article>((json) => Article.fromJson(json)).toList();
-
-    } else {
-      throw Exception('Failed to load data');
+    try{
+      final response = await http.get(Uri.parse('$apiUrl/api/v1/search_by_date?query=mobile'));
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.body);
+        return jsonData['hits'].map<Article>((json) => Article.fromJson(json)).toList();
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      throw Exception('connection error');
     }
   }
 }
